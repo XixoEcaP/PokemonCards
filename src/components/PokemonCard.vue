@@ -17,6 +17,7 @@
       <button @click="fetchPokemon">New Pokémon</button>
       <button @click="changeGeneration">Change Generation</button>
     </div>
+    
 
   </div>
 </template>
