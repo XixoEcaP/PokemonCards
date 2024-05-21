@@ -167,7 +167,7 @@ export default {
 </script>
 
 <style>
-/* Add your CSS styles for the component */
+
 .card {
   transform: scale(0.9);
   background-color: #E7BA77;
@@ -302,57 +302,57 @@ button:hover {
 }
 
 
-/* Pokémon Type Background Colors with Transparency */
+
 .dark {
-  background-color: rgb(0, 0, 0); /* Dark Black */
+  background-color: rgb(0, 0, 0);
 }
 
 .flying {
-  background-color: rgb(230, 204, 153); /* Really Light Brown */
+  background-color: rgb(230, 204, 153); 
 }
 
 .fairy {
-  background-color: rgb(255, 192, 203); /* Pink */
+  background-color: rgb(255, 192, 203);
 }
 
 .steel {
-  background-color: rgba(169, 169, 169); /* Grey */
+  background-color: rgba(169, 169, 169); 
 }
 
 .normal {
-  background-color: rgb(203, 202, 202); /* Lighter Grey */
+  background-color: rgb(203, 202, 202); 
 }
 
 .ground {
-  background-color: rgba(139, 69, 19); /* Brown */
+  background-color: rgba(139, 69, 19); 
 }
 
 .rock {
-  background-color: rgba(101, 67, 33); /* Dark Brown */
+  background-color: rgba(101, 67, 33); 
 }
 
 .grass {
-  background-color: rgba(0, 128, 0); /* Green */
+  background-color: rgba(0, 128, 0); 
 }
 
 .poison {
-  background-color: rgb(150, 1, 150); /* Dark Purple */
+  background-color: rgb(150, 1, 150);
 }
 
 .psychic {
-  background-color: rgba(218, 112, 214); /* Pink Purple */
+  background-color: rgba(218, 112, 214); 
 }
 
 .dragon {
-  background-color: rgba(0, 0, 255); /* Blue */
+  background-color: rgba(0, 0, 255); 
 }
 
 .water {
-  background-color: rgba(0, 81, 255); /* Blue */
+  background-color: rgba(0, 81, 255);
 }
 
 .ice {
-  background-color: rgba(173, 216, 230); /* Really Light Blue */
+  background-color: rgba(173, 216, 230); 
 }
 
 .electric {
