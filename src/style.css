@@ -70,7 +70,7 @@ button:focus-visible {
     color: #213547;
     background-color: #ffffff;
     background-size: cover; 
-   
+    background-image: url("/resources/pokemon2.png");
   }
   a:hover {
     color: #747bff;

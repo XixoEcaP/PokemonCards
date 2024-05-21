@@ -8,6 +8,7 @@
 import PokemonCard from './components/PokemonCard.vue';
 
 export default {
+  name: 'App',
   components: {
     PokemonCard
   }
@@ -15,13 +16,5 @@ export default {
 </script>
 
 <style>
-/* Add global styles here */
-body {
-  padding: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-image: url("/resources/pokemon2.png");
-  background-size: cover;
-}
+/* Add any global styles here if needed */
 </style>
