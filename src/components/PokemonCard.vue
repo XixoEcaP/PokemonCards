@@ -15,7 +15,9 @@
     </div>
     <div id="footer">
       <button @click="fetchPokemon">New Pokémon</button>
+      <button @click="changeGeneration">Change Generation</button>
     </div>
+
   </div>
 </template>
 
@@ -31,7 +33,8 @@ export default {
       hp: 0,
       pokemonTypes: [],
       primaryTypeClass: '',
-      moves: []
+      moves: [],
+      currentGeneration: 1
     };
   },
   mounted() {
@@ -39,7 +42,7 @@ export default {
   },
   methods: {
     async fetchPokemon() {
-      const pokemonNumber = Math.floor(Math.random() * 898) + 1;
+      const pokemonNumber = this.getPokemonNumberByGeneration(this.currentGeneration);
       try {
         const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonNumber}`);
         const pokemonData = response.data;
@@ -52,20 +55,69 @@ export default {
         // Set the primary type class for styling
         this.primaryTypeClass = this.getBackgroundColorClass(this.pokemonTypes[0]);
 
-        // Fetch moves and their types
-        this.moves = [];
-        for (let i = 0; i < Math.min(pokemonData.moves.length, 4); i++) {
-          const moveUrl = pokemonData.moves[i].move.url;
-          const moveResponse = await axios.get(moveUrl);
-          const moveData = moveResponse.data;
-          this.moves.push({
-            name: moveData.name,
-            typeClass: this.getBackgroundColorClass(moveData.type.name)
-          });
-        }
+        // Fetch random moves and their types
+        this.moves = await this.getRandomMoves(pokemonData);
       } catch (error) {
         console.error('Fetch error: ', error);
       }
+    },
+    getPokemonNumberByGeneration(generation) {
+      switch (generation) {
+        case 1:
+          return Math.floor(Math.random() * 151) + 1;
+        case 2:
+          return Math.floor(Math.random() * 100) + 152;
+        case 3:
+          return Math.floor(Math.random() * 135) + 252;
+        case 4:
+          return Math.floor(Math.random() * 107) + 387;
+        case 5:
+          return Math.floor(Math.random() * 156) + 494;
+        case 6:
+          return Math.floor(Math.random() * 72) + 650;
+        case 7:
+          return Math.floor(Math.random() * 88) + 722;
+        case 8:
+          return Math.floor(Math.random() * 89) + 810;
+        case 9:
+          return Math.floor(Math.random() * 82) + 899;
+        default:
+          return Math.floor(Math.random() * 151) + 1;
+      }
+    },
+    async getRandomMoves(pokemonData) {
+      const possibleMoves = Math.min(pokemonData.moves.length, 4);
+      const moves = [];
+
+      function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min)) + min;
+      }
+
+      for (let i = 0; i < possibleMoves; i++) {
+        let moveFound = false;
+        let randomIndex;
+        let moveName;
+
+        do {
+          randomIndex = getRandomInt(0, pokemonData.moves.length);
+          moveName = pokemonData.moves[randomIndex].move.name;
+          moveFound = moves.some(move => move.name === moveName);
+        } while (moveFound);
+
+        const moveUrl = pokemonData.moves[randomIndex].move.url;
+        const moveResponse = await axios.get(moveUrl);
+        const moveData = moveResponse.data;
+        moves.push({
+          name: moveData.name,
+          typeClass: this.getBackgroundColorClass(moveData.type.name)
+        });
+      }
+
+      return moves;
+    },
+    changeGeneration() {
+      this.currentGeneration = (this.currentGeneration % 9) + 1;
+      this.fetchPokemon();
     },
     getBackgroundColorClass(type) {
       switch (type.toLowerCase()) {
@@ -114,8 +166,9 @@ export default {
 </script>
 
 <style>
-
+/* Add your CSS styles for the component */
 .card {
+  transform: scale(0.9);
   background-color: #E7BA77;
   background-repeat: none;
   background-size: cover;
@@ -126,7 +179,7 @@ export default {
   box-shadow: inset 0 0 10px #000000;
   margin-top: 50px;
   margin-left: 10px;
-  width: 350px;
+  width: 390px;
 }
 
 #pokemon-container {
@@ -154,29 +207,28 @@ export default {
   margin-right: 20px;
   font-size: 0;
   position: relative;
-  top: 20px;
+  top: 20px; /* Reduce the top space */
   display: flex;
+  justify-content: space-between; /* Add this to space out the name and level */
 }
 
 #name {
   color: white;
-  display: inline-block;
   font-family: 'Yanone Kaffeesatz', sans-serif;
   font-size: 25px;
   font-weight: 700;
-  width: 180px;
-  justify-content: flex-start;
+  margin-right: auto; /* Align to the right */
 }
 
 #level {
   color: white;
-  display: inline-block;
   font-family: 'Josefin Sans', sans-serif;
   font-size: 25px;
   letter-spacing: -1px;
   text-align: right;
-  width: 50%;
+  margin-left: auto; /* Align to the left */
 }
+
 
 #banner {
   color: #fff5ce;
@@ -242,9 +294,12 @@ button {
   padding: 10px 20px;
 }
 
+
+
 button:hover {
   background-color: #FF9900;
 }
+
 
 /* Pokémon Type Background Colors with Transparency */
 .dark {
