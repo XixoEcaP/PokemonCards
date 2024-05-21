@@ -17,7 +17,7 @@
       <button @click="fetchPokemon">New Pokémon</button>
       <button @click="changeGeneration">Change Generation</button>
     </div>
-    <audio ref="music" src="resources/RSE 105 Littleroot Town.mp3" loop autoplay></audio>
+
   </div>
 </template>
 
@@ -160,18 +160,9 @@ export default {
         default:
           return 'default';
       }
-    },
-    playMusic() {
-      this.$refs.music.play();
-      this.$refs.music.addEventListener('ended', () => {
-        this.$refs.music.currentTime = 0;
-        this.$refs.music.play();
-      });
     }
   }
 };
-
-
 </script>
 
 <style>
